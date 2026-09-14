@@ -279,9 +279,9 @@ const BASE=[['07.15','Sveglia',''],['07.45','Colazione','Refettorio'],['08.30','
 const ITM=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
 const ITD=['dom','lun','mar','mer','gio','ven','sab'];
 const ITDF=['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'];
+const START=new Date(2026,8,11);   /* giorno 0 della scuola di prova */
 function buildDays(){
-  const t0=new Date();t0.setHours(0,0,0,0);
-  const start=new Date(t0.getTime()-5*86400000),out=[];
+  const start=new Date(START.getTime()),out=[];
   for(let i=0;i<17;i++){
     const d=new Date(start.getTime()+i*86400000);
     let label,week,items=BASE.map(r=>({t:r[0],n:r[1],w:r[2]}));
@@ -305,7 +305,9 @@ function buildDays(){
   }
   return out;
 }
-const DAYS=buildDays(), TODAY=5;
+const DAYS=buildDays();
+const TODAY=(()=>{const t=new Date();t.setHours(0,0,0,0);
+  return Math.min(16,Math.max(0,Math.round((t-START)/86400000)))})();
 function nowMin(){const d=new Date();return d.getHours()*60+d.getMinutes()}
 const LUOGHI=['Liceo Dante · piazzale','ITT Fermi · fermata bus','Liceo Nolfi · ingresso','Palestra comunale',
  'Piscina comunale','Oratorio San Paolo','Bar del centro','Stazione di Pesaro','Casa','Altro (vedi nota)'];
@@ -705,6 +707,47 @@ document.getElementById('view').addEventListener('input',e=>{
     document.getElementById('notastate').textContent='salvato sul tuo telefono';}});
 
 
+
+/* ---------------- calendario ---------------- */
+const CAL_BASE='webcal://sankio23.github.io/beone/cal/';
+const VTZ=['BEGIN:VTIMEZONE','TZID:Europe/Rome','BEGIN:DAYLIGHT','TZOFFSETFROM:+0100','TZOFFSETTO:+0200','TZNAME:CEST',
+ 'DTSTART:19700329T020000','RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU','END:DAYLIGHT','BEGIN:STANDARD','TZOFFSETFROM:+0200',
+ 'TZOFFSETTO:+0100','TZNAME:CET','DTSTART:19701025T030000','RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU','END:STANDARD','END:VTIMEZONE'];
+const BYDAY=['SU','MO','TU','WE','TH','FR','SA'];
+function pad(n){return String(n).padStart(2,'0')}
+function stampNow(){const d=new Date();return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+'T'
+  +pad(d.getUTCHours())+pad(d.getUTCMinutes())+pad(d.getUTCSeconds())+'Z'}
+function nextDow(dw,t){ /* prossima occorrenza del giorno dw all'ora t */
+  const [h,m]=t.split('.').map(Number), d=new Date(); d.setHours(h,m,0,0);
+  let delta=(dw-d.getDay()+7)%7; if(delta===0&&d<new Date())delta=7;
+  d.setDate(d.getDate()+delta); return d;
+}
+function icsDate(d,addMin){const x=new Date(d.getTime()+(addMin||0)*60000);
+  return x.getFullYear()+pad(x.getMonth()+1)+pad(x.getDate())+'T'+pad(x.getHours())+pad(x.getMinutes())+'00'}
+function icsEsc(t){return String(t).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,')}
+function mieiSpostamentiICS(){
+  const pat=pattern(state.who), L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//be ONE//spostamenti//IT','CALSCALE:GREGORIAN']
+    .concat(['X-WR-CALNAME:be ONE · i miei spostamenti','X-WR-TIMEZONE:Europe/Rome']).concat(VTZ);
+  let k=0;
+  for(let dw=1;dw<=5;dw++){(pat[dw]||[]).forEach(m=>{
+    const start=nextDow(dw,m.t);
+    L.push('BEGIN:VEVENT','UID:mov'+(k++)+'-'+Date.now()+'@beone','DTSTAMP:'+stampNow(),
+      'DTSTART;TZID=Europe/Rome:'+icsDate(start),'DTEND;TZID=Europe/Rome:'+icsDate(start,20),
+      'RRULE:FREQ=WEEKLY;BYDAY='+BYDAY[dw]+';COUNT=4',
+      'SUMMARY:'+icsEsc(m.dir==='esco'?'Mi accompagnano':'Mi riprendono'),
+      'LOCATION:'+icsEsc(m.luogo),
+      'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+icsEsc(m.luogo),'TRIGGER:-PT15M','END:VALARM','END:VEVENT');
+  })}
+  L.push('END:VCALENDAR');
+  return L.join('\r\n')+'\r\n';
+}
+function scaricaSpostamenti(){
+  const blob=new Blob([mieiSpostamentiICS()],{type:'text/calendar;charset=utf-8'});
+  const url=URL.createObjectURL(blob), a=document.createElement('a');
+  a.href=url; a.download='i-miei-spostamenti.ics'; document.body.appendChild(a); a.click();
+  setTimeout(()=>{URL.revokeObjectURL(url);a.remove()},1500);
+}
+
 /* ---------------- avvio, identità, impostazioni ---------------- */
 const RAGAZZI=PEOPLE.filter(p=>p.role==='ragazzo');
 function fmtOggi(){const d=DAYS[TODAY];return d.dowFull+' '+d.dd+' '+d.month}
@@ -733,6 +776,12 @@ function openSheet(first){
        ? 'Tocca <b>Condividi</b> in basso in Safari, poi <b>Aggiungi a Home</b>: si apre come un\'app e funziona anche senza rete.'
        : 'Apri il menu del browser e scegli <b>Installa app</b> o <b>Aggiungi a schermata Home</b>: funziona anche senza rete.')+'</p>'
     +'<div class="btnrow" style="justify-content:flex-start;margin-top:10px" id="installrow"></div></div>'
+    +'<div class="card" style="margin-top:10px"><h3>Promemoria sul telefono</h3>'
+    +'<p style="margin-top:5px">Iscrivi il calendario del telefono: programma, meditazione e i turni del gruppo '+g
+    +' arrivano come promemoria, anche senza rete e con l\'app chiusa.</p>'
+    +'<div class="btnrow" style="justify-content:flex-start;margin-top:10px">'
+    +'<a class="btn" href="'+CAL_BASE+'gruppo-'+g+'.ics">Iscrivi il calendario</a>'
+    +'<button class="btn ghost" data-ics="1">Esporta i miei spostamenti</button></div></div>'
     +'<div class="card" style="margin-top:10px"><h3>Qualcosa non va?</h3>'
     +'<p style="margin-top:5px">Scrivilo: è una prova, serve proprio per questo.</p>'
     +'<div class="btnrow" style="justify-content:flex-start;margin-top:10px">'
@@ -752,6 +801,7 @@ document.getElementById('sheet').addEventListener('click',e=>{
     state.who=null;try{localStorage.removeItem('beone.who')}catch(err){}
     document.getElementById('sheet').hidden=true;document.getElementById('app').hidden=true;
     document.getElementById('onb').hidden=false;return}
+  if(e.target.closest('[data-ics]')){scaricaSpostamenti();return}
   if(e.target.closest('[data-install]')&&deferredPrompt){deferredPrompt.prompt();deferredPrompt=null;
     document.getElementById('installrow').innerHTML='';}
 });

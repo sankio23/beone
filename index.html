@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>be ONE · Scuola di unità</title>
+<meta name="theme-color" content="#121212">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="be ONE">
+<meta name="robots" content="noindex,nofollow">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,600;1,700&display=swap">
+<style>
+
+:root{
+  --black:#121212; --panel:#1C1C1C; --panel-2:#232323; --panel-3:#2C2C2C;
+  --line:#3A3A3A; --line-soft:#2B2B2B;
+  --white:#FFFFFF; --grey:#9C9C9C; --grey-2:#6E6E6E;
+  --yellow:#DFFF1F; --yellow-dim:#A8C215; --yellow-ink:#1A1E05;
+  --display:"Anton","Arial Narrow",sans-serif;
+  --body:"Barlow Condensed","Arial Narrow",sans-serif;
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box}
+body{background:var(--black);background-image:var(--grain);color:var(--white);
+  font-family:var(--body);font-size:17px;line-height:1.45;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.005em;text-wrap:balance;line-height:1.02}
+p{margin:0}
+.page{max-width:1010px;margin:0 auto;padding-inline:18px;padding-block:34px 60px;display:grid;gap:30px;grid-template-columns:1fr}
+
+/* ---- brand parts ---- */
+.rule{display:flex;align-items:center;gap:11px;font-weight:600;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--yellow)}
+.rule::before,.rule::after{content:"";height:1px;background:var(--yellow);flex:1;opacity:.85}
+.rule.left::before{display:none}
+.rule.grey{color:var(--grey-2)}
+.rule.grey::before,.rule.grey::after{background:var(--line)}
+.badge{width:52px;height:52px;border:1.5px solid var(--yellow);border-radius:50%;display:grid;place-content:center;justify-items:center;line-height:1;flex:0 0 auto}
+.badge .be{font-style:italic;font-weight:700;font-size:13px;color:var(--yellow);transform:translateX(-7px) rotate(-4deg)}
+.badge .one{font-family:var(--display);font-size:15px;color:var(--white);letter-spacing:.04em;margin-top:-3px}
+.badge.sm{width:34px;height:34px}
+.badge.sm .be{font-size:9px;transform:translateX(-5px) rotate(-4deg)}
+.badge.sm .one{font-size:10px;margin-top:-2px}
+
+/* ---- device ---- */
+.device{width:100%;max-width:420px;margin:0 auto;background:var(--panel);background-image:var(--grain);
+  border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;
+  height:clamp(560px,80vh,780px);box-shadow:0 26px 60px -30px #000}
+.statusbar{display:flex;justify-content:space-between;padding:9px 18px 0;font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey-2)}
+.appbar{padding:6px 18px 11px;display:flex;align-items:center;gap:11px;border-bottom:1px solid var(--line-soft)}
+.appbar .title{font-family:var(--display);font-size:17px;letter-spacing:.02em}
+.appbar .title em{font-style:normal;color:var(--yellow)}
+select,button,textarea,input{font-family:inherit;font-size:inherit;color:inherit}
+.who-select{appearance:none;margin-left:auto;background:var(--panel-2);border:1px solid var(--line);border-radius:2px;
+  padding:4px 24px 4px 10px;font-size:14px;font-weight:500;letter-spacing:.04em;max-width:160px;text-transform:uppercase;
+  background-image:linear-gradient(45deg,transparent 50%,var(--yellow) 50%),linear-gradient(135deg,var(--yellow) 50%,transparent 50%);
+  background-position:calc(100% - 14px) 12px,calc(100% - 9px) 12px;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.scroll{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:15px 18px 26px;display:grid;gap:15px;align-content:start}
+.simbar{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--grey-2);padding:7px 18px;border-top:1px solid var(--line-soft)}
+.simbar input[type="range"]{flex:1;accent-color:var(--yellow);min-width:80px}
+.tabbar{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);background:#171717}
+.tabbar button{background:none;border:0;padding:9px 2px 11px;display:grid;justify-items:center;gap:4px;cursor:pointer;
+  font-weight:600;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey-2)}
+.tabbar button svg{width:21px;height:21px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.tabbar button[aria-selected="true"]{color:var(--yellow)}
+:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+
+/* ---- app blocks ---- */
+.screen-h{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.screen-h h2{font-size:27px}
+.screen-h .sub{font-weight:600;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey-2);padding-bottom:3px}
+.now{border:1px solid var(--yellow);border-radius:4px;padding:14px 15px;display:grid;gap:5px}
+.now .lbl{font-weight:700;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--yellow)}
+.now .what{font-family:var(--display);font-size:25px;line-height:1.04;text-transform:uppercase}
+.now .meta{font-weight:500;font-size:15px;color:var(--grey);letter-spacing:.02em}
+.now .meta b{color:var(--yellow);font-weight:600}
+.row{display:flex;gap:13px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line-soft)}
+.row:last-child{border-bottom:0}
+.row .t{font-weight:600;font-size:16px;color:var(--yellow);min-width:44px;letter-spacing:.03em}
+.row .n{font-weight:600;font-size:17px;letter-spacing:.01em}
+.row .w{font-size:14.5px;color:var(--grey-2);letter-spacing:.02em}
+.row.mio{border-left:2px solid var(--yellow);padding-left:10px;margin-left:-12px}
+.tagi{display:inline-block;font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--yellow);
+  border:1px solid var(--yellow);border-radius:2px;padding:0 5px;margin-left:7px;vertical-align:2px}
+.row.past{opacity:.36}
+.row.past .t{color:var(--grey-2)}
+.card{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:4px;padding:12px 14px}
+.card h3{font-size:16px;letter-spacing:.06em}
+.card p{font-size:16px;color:var(--grey)}
+.card p b,.card p strong{color:var(--white);font-weight:600}
+.pill{display:inline-block;font-weight:700;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--line);border-radius:2px;color:var(--grey)}
+.pill.on{border-color:var(--yellow);color:var(--yellow)}
+.alert{border-left:3px solid var(--yellow);background:var(--panel-2);padding:10px 13px;display:grid;gap:3px}
+.alert .k{font-weight:700;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--yellow)}
+.alert p{font-size:16px}
+.alert .meta{font-size:13px;color:var(--grey-2);letter-spacing:.06em;text-transform:uppercase}
+.staff{border:1px dashed var(--line);border-radius:4px;padding:12px 14px;display:grid;gap:6px}
+.staff ul{margin:0;padding-left:17px;font-size:16px;color:var(--grey);display:grid;gap:3px}
+.daystrip{display:flex;align-items:stretch;gap:6px;overflow-x:auto;overflow-y:hidden;margin-inline:-18px;padding:2px 18px 7px;min-height:52px}
+.chip{flex:0 0 auto;align-content:center;background:transparent;border:1px solid var(--line);border-radius:3px;padding:5px 9px 6px;display:grid;justify-items:center;cursor:pointer;min-width:46px}
+.chip .dw{font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey-2)}
+.chip .dd{font-family:var(--display);font-size:17px;line-height:1.1}
+.chip[aria-pressed="true"]{background:var(--yellow);border-color:var(--yellow);color:var(--yellow-ink)}
+.chip[aria-pressed="true"] .dw{color:#3E4A08}
+.chip.today .dd::after{content:"·";color:var(--yellow);margin-left:2px}
+.chip[aria-pressed="true"].today .dd::after{color:var(--yellow-ink)}
+table{width:100%;border-collapse:collapse;font-size:16px}
+th{text-align:left;font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--grey-2);padding:0 8px 6px 0;border-bottom:1px solid var(--line)}
+td{padding:8px 8px 8px 0;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--grey)}
+td.k{color:var(--white);font-weight:600;white-space:nowrap}
+td .s{display:block;font-size:14px;color:var(--grey-2)}
+tr:last-child td{border-bottom:0}
+tr.mine td{background:var(--panel-2);color:var(--white)}
+tr.mine td:first-child{box-shadow:inset 3px 0 0 var(--yellow)}
+tr.mine td:first-child{padding-left:9px}
+.gnum{display:inline-grid;place-content:center;width:22px;height:22px;border:1px solid var(--yellow);border-radius:50%;
+  color:var(--yellow);font-weight:700;font-size:13px;line-height:1;vertical-align:-5px}
+.gnum.big{width:46px;height:46px;font-family:var(--display);font-size:24px;font-weight:400;vertical-align:0}
+
+/* ---- meditation poster ---- */
+.poster{position:relative;border:1px solid var(--yellow);border-radius:6px;padding:22px 18px 20px;display:grid;gap:14px;justify-items:center;text-align:center;background:#171717;background-image:var(--grain)}
+.poster.mini{padding:16px 15px;gap:10px}
+.poster .ico{width:52px;height:52px;stroke:var(--yellow);stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.poster.mini .ico{width:36px;height:36px}
+.poster .kicker{display:flex;align-items:center;gap:10px;width:100%;font-weight:700;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--yellow);justify-content:center}
+.poster .kicker::before,.poster .kicker::after{content:"";height:1px;background:var(--yellow);flex:1;max-width:46px;opacity:.9}
+.poster .badge{position:absolute;right:13px;bottom:12px}
+.poster h3{font-size:31px;line-height:1;max-width:16ch}
+.poster.mini h3{font-size:22px}
+.poster .text{font-weight:500;font-size:17.5px;line-height:1.6;max-width:30ch;color:var(--white)}
+.poster .amen{font-style:italic;font-weight:700;font-size:19px;color:var(--yellow);letter-spacing:.02em}
+.poster .foot{font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey-2)}
+button.posterlink{border:0;background:none;padding:0;width:100%;text-align:inherit;cursor:pointer;display:block}
+.steps{margin:0;padding-left:18px;font-size:16.5px;color:var(--grey);display:grid;gap:4px}
+.timer{display:grid;justify-items:center;gap:11px;padding:4px 0 0}
+.ring{position:relative;width:154px;height:154px}
+.ring svg{transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:6}
+.ring .bg{stroke:var(--panel-3)}
+.ring .fg{stroke:var(--yellow);stroke-linecap:round;transition:stroke-dashoffset .3s linear}
+.ring .val{position:absolute;inset:0;display:grid;place-content:center;font-family:var(--display);font-size:37px;letter-spacing:.01em}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.btn{background:var(--yellow);color:var(--yellow-ink);border:0;border-radius:2px;padding:8px 20px;cursor:pointer;
+  font-weight:700;font-size:14px;letter-spacing:.14em;text-transform:uppercase}
+.btn.ghost{background:transparent;color:var(--grey);border:1px solid var(--line)}
+.btn.small{padding:5px 12px;font-size:12.5px}
+textarea{width:100%;min-height:112px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;padding:10px 12px;font-size:17px;line-height:1.5;resize:vertical}
+.local{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:7px;
+  font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey-2)}
+.empty{font-size:16px;color:var(--grey-2)}
+.movrow{display:grid;grid-template-columns:1fr 1fr 30px;gap:6px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line-soft)}
+.movrow:last-of-type{border-bottom:0}
+.movrow select:nth-of-type(1){grid-area:1/1}
+.movrow select:nth-of-type(2){grid-area:1/2}
+.movrow select:nth-of-type(3){grid-area:2/1}
+.movrow select:nth-of-type(4){grid-area:2/2}
+.movrow .xbtn{grid-area:1/3;justify-self:center}
+.movrow select{background:var(--panel-3);border:1px solid var(--line);border-radius:2px;padding:5px 4px;font-size:14px;width:100%;min-width:0}
+.xbtn{background:none;border:1px solid var(--line);color:var(--grey-2);border-radius:2px;width:26px;height:26px;line-height:1;cursor:pointer;font-size:15px}
+a.btn{text-decoration:none;display:inline-block}
+.editgrid{display:grid;grid-template-columns:auto 1fr 1fr;gap:7px 9px;align-items:center;font-size:15px}
+.editgrid label{font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey-2);display:flex;gap:6px;align-items:center;white-space:nowrap}
+.editgrid input[type="checkbox"]{accent-color:var(--yellow);width:15px;height:15px}
+.editgrid select,.editgrid input[type="text"],.editgrid input:not([type]){background:var(--panel-3);border:1px solid var(--line);border-radius:2px;padding:5px 7px;font-size:15px;width:100%;min-width:0}
+
+/* ---- notes column ---- */
+.brief h1{font-size:clamp(30px,5vw,42px);line-height:.98;margin-top:9px}
+.brief p{color:var(--grey);margin-top:13px;max-width:58ch;font-size:18px}
+.notes{display:grid;gap:13px}
+.note{border:1px solid var(--line-soft);border-radius:4px;padding:14px 16px;background:var(--panel)}
+.note h3{font-size:17px;letter-spacing:.03em}
+.note .tag{font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--yellow);display:block;margin-bottom:3px}
+.note p{font-size:16.5px;color:var(--grey);margin-top:5px}
+.note p b{color:var(--white);font-weight:600}
+.note.flag{border-color:var(--yellow-dim)}
+.caption{font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey-2);text-align:center;margin-top:12px}
+
+@media (min-width:900px){
+  .page{grid-template-columns:420px 1fr;gap:36px;align-items:start}
+  .frame{grid-column:1;grid-row:1 / span 2;position:sticky;top:26px}
+  .brief{grid-column:2;grid-row:1}
+  .notes{grid-column:2;grid-row:2}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+
+/* ---- versione di prova: a tutto schermo ---- */
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0}
+.device{max-width:none;margin:0;border:0;border-radius:0;height:100dvh;box-shadow:none}
+.appbar{padding-top:calc(10px + env(safe-area-inset-top))}
+.tabbar{padding-bottom:env(safe-area-inset-bottom)}
+.scroll{padding-bottom:30px}
+.meBtn{margin-left:auto;background:transparent;border:1px solid var(--line);border-radius:999px;
+  padding:4px 12px;font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);cursor:pointer}
+.today{font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey-2)}
+.onb{position:fixed;inset:0;background:var(--black);background-image:var(--grain);display:grid;align-content:start;
+  gap:16px;padding:calc(34px + env(safe-area-inset-top)) 20px 40px;overflow-y:auto;z-index:20}
+.onb h1{font-size:34px;line-height:1}
+.onb p{color:var(--grey);font-size:17px}
+.namebtn{display:flex;justify-content:space-between;align-items:baseline;gap:10px;width:100%;text-align:left;
+  background:var(--panel-2);border:1px solid var(--line);border-radius:3px;padding:12px 14px;cursor:pointer;
+  font-family:var(--display);font-size:19px;text-transform:uppercase;color:var(--white)}
+.namebtn span{font-family:var(--body);font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey-2)}
+#onblist{display:grid;gap:8px}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.72);display:grid;align-items:end;z-index:30}
+.sheetbox{background:var(--panel);background-image:var(--grain);border-top:1px solid var(--yellow);
+  border-radius:14px 14px 0 0;padding:20px 18px calc(22px + env(safe-area-inset-bottom));max-height:88dvh;overflow-y:auto}
+
+</style>
+</head>
+<body>
+
+<div class="onb" id="onb" hidden>
+  <p class="rule left">Scuola di unità 2026 · prova</p>
+  <h1>Chi sei?</h1>
+  <p>Scegli il tuo nome: serve solo a mostrarti i tuoi turni e i tuoi orari. Resta su questo telefono.</p>
+  <div id="onblist"></div>
+  <p class="local"><span>versione di prova · nomi e orari inventati</span></p>
+</div>
+
+<div class="device" id="app" hidden>
+  <div class="appbar">
+    <div class="badge sm"><span class="be">be</span><span class="one">ONE</span></div>
+    <span class="today" id="today"></span>
+    <button class="meBtn" id="meBtn">io</button>
+  </div>
+  <div class="scroll" id="view"></div>
+  <nav class="tabbar" id="tabs" role="tablist"></nav>
+</div>
+
+<div class="sheet" id="sheet" hidden><div class="sheetbox" id="sheetbody"></div></div>
+
+<script>
+
+/* ===================== dati di esempio ===================== */
+const GRUPPI=[1,2,3,4];
+const PEOPLE=[
+ {n:'Giulia B.',role:'ragazzo',g:1,school:'Liceo Dante'},
+ {n:'Matteo R.',role:'ragazzo',g:2,school:'ITT Fermi'},
+ {n:'Sara C.',role:'ragazzo',g:3,school:'Liceo Nolfi'},
+ {n:'Youssef E.',role:'ragazzo',g:4,school:'Liceo Dante'},
+ {n:'Chiara M.',role:'ragazzo',g:1,school:'ITT Fermi'},
+ {n:'Lorenzo P.',role:'ragazzo',g:2,school:'Liceo Nolfi'},
+ {n:'Aisha N.',role:'ragazzo',g:3,school:'Liceo Dante'},
+ {n:'Davide T.',role:'ragazzo',g:4,school:'ITT Fermi'},
+ {n:'Anna T.',role:'animatore',g:null,school:'—'},
+ {n:'Marco S.',role:'animatore',g:null,school:'—'}];
+/* SERVIZI e TURNI: la tabella che mi dai tu — una riga per giorno,
+   quattro colonne (gruppo 1, 2, 3, 4) con l'indice del servizio. */
+const SERVIZI=[{id:'Cucina',t:'12.00'},{id:'Refettorio',t:'13.15'},
+               {id:'Bagni e docce',t:'13.15'},{id:'Camerate ed esterni',t:'08.15'}];
+const TURNI={
+  3:[0,1,2,3],  4:[1,2,3,0],  5:[2,3,0,1],  6:[3,0,1,2],  7:[0,2,1,3],  8:[1,3,0,2],
+ 10:[2,0,3,1], 11:[3,1,2,0], 12:[0,1,2,3], 13:[1,2,3,0], 14:[2,3,0,1], 15:[3,0,1,2],
+ 16:'tutti'};
+function turniOf(day,g){
+  const r=TURNI[day];
+  if(!r||!g) return null;
+  if(r==='tutti') return {id:'Pulizie generali e partenze',t:'14.30'};
+  return SERVIZI[r[g-1]]||null;
+}
+function gruppoDi(person){
+  const loc=store.get('gruppo.'+person,null);
+  if(loc) return +loc;
+  const p=PEOPLE.find(x=>x.n===person);
+  return p?p.g:null;
+}
+function membriDi(g){return PEOPLE.filter(p=>p.role==='ragazzo'&&gruppoDi(p.n)===g).map(p=>p.n)}
+const BASE=[['07.15','Sveglia',''],['07.45','Colazione','Refettorio'],['08.30','Momento di spiritualità','Cappella'],
+ ['09.15','Sessione del mattino','Aula grande'],['10.45','Pausa',''],['11.15','Lavoro nei gruppi','Sale gruppi'],
+ ['12.45','Pranzo','Refettorio'],['13.15','Turni di servizio',''],['14.15','Tempo libero',''],
+ ['15.45','Meditazione · 15 minuti','Dove vuoi'],['16.30','Laboratorio','Sale gruppi'],['18.00','Sport e servizio','Campo'],
+ ['19.30','Cena','Refettorio'],['21.00','Serata','Aula grande'],['22.30','Silenzio','']];
+const ITM=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+const ITD=['dom','lun','mar','mer','gio','ven','sab'];
+const ITDF=['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'];
+function buildDays(){
+  const t0=new Date();t0.setHours(0,0,0,0);
+  const start=new Date(t0.getTime()-5*86400000),out=[];
+  for(let i=0;i<17;i++){
+    const d=new Date(start.getTime()+i*86400000);
+    let label,week,items=BASE.map(r=>({t:r[0],n:r[1],w:r[2]}));
+    if(i<3){week='Ritiro';label='Ritiro · giorno '+(i+1);
+      items=[['07.30','Sveglia',''],['08.15','Colazione','Refettorio'],['09.00','Silenzio e lettura','Cappella'],
+        ['11.00','Meditazione guidata','Cappella'],['12.45','Pranzo in silenzio','Refettorio'],['15.00','Deserto personale','Bosco'],
+        ['17.30','Condivisione','Sale gruppi'],['19.30','Cena','Refettorio'],['21.00','Veglia','Cappella'],['22.15','Silenzio','']]
+        .map(r=>({t:r[0],n:r[1],w:r[2]}));
+    } else if(i<9){week='Settimana 1';label='Il dado · faccia '+(i-2);}
+    else if(i===9){week='Settimana 1';label='Patto dell’amore reciproco';
+      items=[['08.00','Colazione','Refettorio'],['09.30','Messa','Cappella'],['11.30','Preparazione del patto','Aula grande'],
+        ['12.45','Pranzo di festa','Refettorio'],['15.30','Riposo',''],['17.00','Patto dell’amore reciproco','Cappella'],
+        ['19.30','Cena','Refettorio'],['21.00','Festa','Cortile'],['23.00','Silenzio','']].map(r=>({t:r[0],n:r[1],w:r[2]}));
+    } else if(i<16){week='Settimana 2';label='Amore reciproco e unità';
+      if(i===12) items=items.map(r=>r.t==='16.30'?{t:'17.00',n:'Ora della verità',w:'Sale gruppi'}:r);
+      if(i===14) items=items.map(r=>r.t==='09.15'?{t:'08.45',n:'Uscita: cammino insieme',w:'Partenza dal cortile'}:r);
+    } else {week='Settimana 2';label='Conclusione';
+      items=[['08.00','Colazione','Refettorio'],['09.30','Messa conclusiva','Cappella'],['11.00','Che cosa portiamo a casa','Aula grande'],
+        ['12.45','Pranzo','Refettorio'],['14.30','Pulizie generali e partenze','']].map(r=>({t:r[0],n:r[1],w:r[2]}));}
+    out.push({i,date:d,dow:ITD[d.getDay()],dowFull:ITDF[d.getDay()],dd:d.getDate(),month:ITM[d.getMonth()],week,label,items});
+  }
+  return out;
+}
+const DAYS=buildDays(), TODAY=5;
+function nowMin(){const d=new Date();return d.getHours()*60+d.getMinutes()}
+const LUOGHI=['Liceo Dante · piazzale','ITT Fermi · fermata bus','Liceo Nolfi · ingresso','Palestra comunale',
+ 'Piscina comunale','Oratorio San Paolo','Bar del centro','Stazione di Pesaro','Casa','Altro (vedi nota)'];
+const MOTIVI=['scuola','recupero','allenamento','lavoro','volontariato','famiglia','visita','altro'];
+const RESP={nome:'Chiara, responsabile trasporti',tel:'393891787634'};
+const DIR={esco:{me:'Mi accompagnano',staff:'Da accompagnare',ed:'accompagnare'},
+           rientro:{me:'Mi riprendono',staff:'Da riprendere',ed:'riprendere'}};
+const MEZZI=[{id:'Furgone 1',posti:8,cond:'Anna T.',dalle:'06.00',alle:'23.30'},
+             {id:'Furgone 2',posti:8,cond:'Marco S.',dalle:'06.00',alle:'23.30'},
+             {id:'Auto',posti:4,cond:'Luca F.',dalle:'14.00',alle:'23.30'}];
+const BASE_MOV={
+ 'Giulia B.':{p:LUOGHI[0],o:'07.30',r:'13.20',pom:[{dow:2,a:'17.00',b:'19.30',l:LUOGHI[3],m:'allenamento'},{dow:4,a:'17.00',b:'19.30',l:LUOGHI[3],m:'allenamento'}]},
+ 'Matteo R.':{p:LUOGHI[1],o:'07.45',r:'13.30',pom:[{dow:3,a:'16.00',b:'18.00',l:LUOGHI[5],m:'volontariato'}]},
+ 'Sara C.':{p:LUOGHI[2],o:'07.40',r:'13.20',pom:[{dow:4,a:'15.00',b:'17.00',l:LUOGHI[2],m:'recupero'}]},
+ 'Youssef E.':{p:LUOGHI[0],o:'07.30',r:'13.20',pom:[{dow:1,a:'17.30',b:'19.00',l:LUOGHI[4],m:'allenamento'},{dow:3,a:'17.30',b:'19.00',l:LUOGHI[4],m:'allenamento'}]},
+ 'Chiara M.':{p:LUOGHI[1],o:'07.45',r:'13.30',pom:[{dow:3,a:'16.30',b:'18.30',l:LUOGHI[3],m:'allenamento'}]},
+ 'Lorenzo P.':{p:LUOGHI[2],o:null,r:null,pom:[]},
+ 'Aisha N.':{p:LUOGHI[0],o:'07.30',r:'14.10',pom:[{dow:5,a:'15.30',b:'18.00',l:LUOGHI[6],m:'lavoro'}]},
+ 'Davide T.':{p:LUOGHI[1],o:'07.45',r:'13.30',pom:[{dow:2,a:'16.00',b:'21.00',l:LUOGHI[7],m:'famiglia'}]}};
+const ECC_DEF=[
+ {who:'Sara C.',day:6,kind:'rientro',t:'16.10',luogo:LUOGHI[2],motivo:'recupero',nota:'recupero di matematica'},
+ {who:'Matteo R.',day:6,kind:'niente',nota:'resto in sede tutto il giorno'},
+ {who:'Aisha N.',day:6,kind:'no-rientro',nota:'mi riprende mia madre'},
+ {who:'Youssef E.',day:5,kind:'rientro',t:'15.00',luogo:LUOGHI[0],motivo:'scuola',nota:''}];
+const CHIUSURA='21.00';
+function allEcc(){try{const v=JSON.parse(store.get('ecc','null'));if(Array.isArray(v))return ECC_DEF.concat(v)}catch(e){}return ECC_DEF.slice()}
+function pattern(person){
+  const saved=store.get('sett.'+person,null);
+  if(saved){try{return JSON.parse(saved)}catch(e){}}
+  const bm=BASE_MOV[person]||{},out={};
+  for(let dw=1;dw<=5;dw++){
+    const arr=[];
+    if(bm.o) arr.push({dir:'esco',t:bm.o,luogo:bm.p,motivo:'scuola'});
+    if(bm.r) arr.push({dir:'rientro',t:bm.r,luogo:bm.p,motivo:'scuola'});
+    (bm.pom||[]).filter(x=>x.dow===dw).forEach(x=>{
+      arr.push({dir:'esco',t:x.a,luogo:x.l,motivo:x.m});
+      arr.push({dir:'rientro',t:x.b,luogo:x.l,motivo:x.m});});
+    out[dw]=arr.sort((c,d)=>mins(c.t)-mins(d.t));
+  }
+  return out;
+}
+function savePattern(person,pat){store.set('sett.'+person,JSON.stringify(pat))}
+function movimentiOf(day,person){
+  const dw=DAYS[day].date.getDay();
+  let arr=(pattern(person)[dw]||[]).map(m=>({...m}));
+  allEcc().filter(e=>e.day===day&&e.who===person).forEach(e=>{
+    if(e.kind==='niente') arr=[];
+    else if(e.kind==='no-rientro') arr=arr.filter(m=>m.dir!=='rientro');
+    else{const i=arr.findIndex(m=>m.dir===e.kind),m={dir:e.kind,t:e.t,luogo:e.luogo,motivo:e.motivo||'—',nota:e.nota,ecc:true};
+      if(i>=0)arr[i]=m;else arr.push(m);}});
+  return arr.sort((a,c)=>mins(a.t)-mins(c.t));
+}
+function piano(day){
+  const movs=[];
+  PEOPLE.filter(p=>p.role==='ragazzo').forEach(p=>movimentiOf(day,p.n).forEach(m=>movs.push({...m,who:p.n})));
+  movs.sort((a,c)=>mins(a.t)-mins(c.t));
+  const groups=[];
+  movs.forEach(m=>{const g=groups.find(g=>g.dir===m.dir&&g.luogo===m.luogo&&Math.abs(mins(g.t0)-mins(m.t))<=15);
+    if(g){g.people.push(m);if(mins(m.t)>mins(g.t1))g.t1=m.t}else groups.push({dir:m.dir,luogo:m.luogo,t0:m.t,t1:m.t,people:[m]})});
+  const free={};MEZZI.forEach(v=>free[v.id]=-999);
+  groups.forEach(g=>{
+    g.key=day+'|'+g.dir+'|'+g.t0+'|'+g.luogo;
+    const manual=store.get('mezzo.'+g.key,null);
+    const t=mins(g.t0);
+    if(manual!==null&&manual!==''){g.mezzo=manual;const v=MEZZI.find(v=>v.id===manual);if(v)free[v.id]=t;return}
+    const v=MEZZI.find(v=>t>=mins(v.dalle)&&t<=mins(v.alle)&&t>=free[v.id]+40&&v.posti>=g.people.length);
+    g.mezzo=v?v.id:null; if(v)free[v.id]=t;
+  });
+  return groups;
+}
+function anomalie(day){
+  const out=[],gs=piano(day);
+  gs.filter(g=>!g.mezzo).forEach(g=>out.push('Nessun mezzo libero per le '+g.t0.replace('.',':')+' a '+g.luogo.split(' · ')[0]+'.'));
+  gs.forEach(g=>{const v=MEZZI.find(v=>v.id===g.mezzo);
+    if(v&&g.people.length>v.posti) out.push(g.mezzo+' alle '+g.t0.replace('.',':')+': '+g.people.length+' persone per '+v.posti+' posti.');});
+  PEOPLE.filter(p=>p.role==='ragazzo').forEach(p=>{
+    const m=movimentiOf(day,p.n);
+    const dichiarato=allEcc().some(e=>e.day===day&&e.who===p.n);
+    if(m.some(x=>x.dir==='esco')&&!m.some(x=>x.dir==='rientro')&&!dichiarato)
+      out.push(p.n+' esce ma non ha dichiarato il rientro.');
+    const b=BASE_MOV[p.n]; const vuota=!store.get('sett.'+p.n,null)&&b&&!b.o&&!b.r;
+    if(vuota) out.push(p.n+' non ha ancora compilato la settimana tipo.');});
+  return out;
+}
+const TIMES=(()=>{const a=[];for(let m=360;m<=1350;m+=10)a.push(String(Math.floor(m/60)).padStart(2,'0')+'.'+String(m%60).padStart(2,'0'));return a})();
+const optList=(arr,val)=>arr.map(x=>'<option'+(x===val?' selected':'')+'>'+x+'</option>').join('');
+const ICONS={
+ sole:'<path d="M26 22V6M26 6l-6 6M26 6l6 6"/><path d="M14 34a12 12 0 0 1 24 0"/><path d="M6 42h40"/><path d="M9 26l3 2M43 26l-3 2M26 44v2"/>',
+ dado:'<rect x="9" y="9" width="34" height="34" rx="7"/><circle cx="19" cy="19" r="2.4" fill="currentColor" stroke="none"/><circle cx="33" cy="33" r="2.4" fill="currentColor" stroke="none"/><circle cx="26" cy="26" r="2.4" fill="currentColor" stroke="none"/>',
+ due:'<circle cx="17" cy="17" r="6"/><circle cx="35" cy="17" r="6"/><path d="M7 42a10 10 0 0 1 20 0M25 42a10 10 0 0 1 20 0"/>',
+ mani:'<path d="M26 44S8 33 8 21a9 9 0 0 1 18-4 9 9 0 0 1 18 4c0 12-18 23-18 23z"/>',
+ cammino:'<path d="M8 44h6M20 44h6M32 44h6M12 32l8-10 6 7 8-13"/><path d="M38 12h6v6"/>',
+ cerchio:'<circle cx="26" cy="26" r="18"/><circle cx="26" cy="26" r="5.5" fill="currentColor" stroke="none"/>'};
+const MEDS={
+ 3:{ico:'dado',face:1,titolo:'Amare tutti',modo:'scritta',testo:'Oggi una domanda sola, tenuta per quindici minuti: chi, qui dentro, non ho ancora guardato? Scrivi un nome. Poi resta lì.'},
+ 4:{ico:'sole',face:2,titolo:'Amare per primi',modo:'scritta',testo:'Amare per primi vuol dire non aspettare il momento giusto. Ricorda l’ultima volta che qualcuno lo ha fatto con te, e quanto ci hai messo ad accorgertene.'},
+ 5:{ico:'mani',face:3,titolo:'Amare il nemico',modo:'scritta',testo:'Non serve un nemico grande: basta la persona che ieri ti ha dato fastidio. Tienila davanti quindici minuti, senza difenderti e senza accusarla.'},
+ 6:{ico:'due',face:4,titolo:'Farsi uno',modo:'in coppia',testo:'Farsi uno è più difficile che aiutare: chiede di svuotarsi. In due: uno parla cinque minuti, l’altro non risponde. Poi il contrario. Poi silenzio.'},
+ 7:{ico:'cerchio',face:5,titolo:'Amare Cristo nel fratello',modo:'audio',testo:'Ascolta la traccia camminando, con gli auricolari. Alla fine non commentare: resta in silenzio fino alla sessione.'},
+ 8:{ico:'dado',face:6,titolo:'Amore reciproco',modo:'in gruppo',testo:'L’amore reciproco non è la somma di due amori: è una cosa terza che nasce. Dite a turno dove l’avete vista nascere in questi giorni.'},
+ 10:{ico:'sole',titolo:'Ripresa del patto',modo:'scritta',amen:true,testo:'Signore, ieri abbiamo promesso di amarci come tu ci ami. Oggi la domanda è una sola: che cosa cambia stamattina, alle undici, in quello che farò.'},
+ 11:{ico:'due',titolo:'Comunione d’anima',modo:'in coppia',testo:'Dire a un altro ciò che Dio sta facendo in me, e ascoltarlo senza interpretare. Quindici minuti, due persone, nessun consiglio.'},
+ 12:{ico:'cerchio',titolo:'Comunione delle esperienze',modo:'in gruppo',testo:'Non idee: fatti. Che cosa ho fatto, che cosa è successo dopo. Uno alla volta, senza commentare quello che dice l’altro.'},
+ 13:{ico:'mani',titolo:'Chi resta indietro',modo:'scritta',testo:'C’è qualcuno che in questi giorni è rimasto ai margini del gruppo. Quindici minuti per chiederti perché non l’hai visto prima.'},
+ 14:{ico:'cammino',titolo:'L’unità, in cammino',modo:'in cammino',testo:'Oggi la meditazione si fa camminando, durante l’uscita, in silenzio, distanti l’uno dall’altro.'},
+ 15:{ico:'cerchio',titolo:'Gesù in mezzo',modo:'in gruppo',amen:true,testo:'Dove due o più sono uniti nel tuo nome. Non è una formula: è una presenza che si riconosce dai suoi effetti. Quali, in questa settimana?'}};
+const AVVISI=[{day:5,t:'12.05',text:'Turni di servizio di oggi spostati alle 13.45: il gruppo rientra tardi dal campo.'}];
+
+/* ===================== stato ===================== */
+const TABS=[
+ {id:'oggi',label:'Oggi',icon:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/>'},
+ {id:'programma',label:'Giorni',icon:'<rect x="3.5" y="5.5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8.5 3v4M15.5 3v4"/>'},
+ {id:'turni',label:'Turni',icon:'<path d="M4 7h16M4 12h13M4 17h9"/><path d="M17 16.6l1.6 1.6 2.6-3"/>'},
+ {id:'trasporti',label:'Trasporti',icon:'<rect x="3" y="5.5" width="18" height="10.5" rx="2"/><path d="M3 11h18"/><circle cx="7.5" cy="19" r="1.5"/><circle cx="16.5" cy="19" r="1.5"/>'},
+ {id:'medita',label:'Medita',icon:'<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"/>'}];
+const store={get(k,d){try{const v=localStorage.getItem('beone.'+k);return v===null?d:v}catch(e){return d}},
+             set(k,v){try{localStorage.setItem('beone.'+k,v)}catch(e){}}};
+const state={tab:'oggi',who:store.get('who',null),day:TODAY,pday:TODAY,edit:null,newecc:false,timer:{left:900,running:false,id:null}};
+const me=()=>PEOPLE.find(p=>p.n===state.who)||PEOPLE[0];
+const isStaff=()=>me().role==='animatore';
+const mins=s=>{const[a,b]=s.split('.').map(Number);return a*60+b};
+const hhmm=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dayTitle=d=>d.dow+' '+d.dd+' '+d.month;
+const posterHTML=(med,d,mini)=>'<div class="poster'+(mini?' mini':'')+'">'
+ +'<svg class="ico" viewBox="0 0 52 52">'+ICONS[med.ico]+'</svg>'
+ +'<span class="kicker">Meditazione di '+d.dowFull+'</span>'
+ +'<h3>'+esc(med.titolo)+'</h3>'
+ +(mini?'<span class="foot">15.45 · '+esc(med.modo)+' · tocca per aprire</span>'
+       :'<p class="text">'+esc(med.testo)+'</p>'+(med.amen?'<span class="amen">Amen.</span>':'')
+        +'<span class="foot">15.45 → 16.00 · '+esc(med.modo)+'</span>'
+        +'<div class="badge sm"><span class="be">be</span><span class="one">ONE</span></div>')
+ +'</div>';
+
+/* ===================== viste ===================== */
+function viewOggi(){
+  const d=DAYS[TODAY],t=nowMin(),items=giornataDi(TODAY,state.who).map(x=>({...x,m:mins(x.t)}));
+  const live=[...items].reverse().find(x=>x.m<=t)||items[0];
+  
+  const turno=turniOf(TODAY,gruppoDi(state.who)),trasp=isStaff()?[]:movimentiOf(TODAY,state.who),med=MEDS[TODAY];
+  let h='<div class="screen-h"><h2>Oggi</h2><span class="sub">'+d.week+'</span></div>';
+  AVVISI.filter(a=>a.day===TODAY&&mins(a.t)<=t).forEach(a=>{
+    h+='<div class="alert"><span class="k">Avviso</span><p>'+esc(a.text)+'</p><span class="meta">notifica delle '+a.t.replace('.',':')+'</span></div>';});
+  h+='<div class="now"><span class="lbl">Adesso'+(live.mio?' · il tuo '+live.mio:'')+'</span><span class="what">'+esc(live.n)+'</span>'
+    +'<span class="meta"><b>dalle '+live.t.replace('.',':')+'</b>'+(live.w?' · '+esc(live.w):'')+'</span></div>';
+  h+='<div><p class="rule grey" style="margin-bottom:2px">La giornata</p>'
+    +items.map(x=>rowHTML(x,x.m+30<=t?' past':'')).join('')+'</div>';
+  if(isStaff()) h+='<div class="card"><h3>Turni di oggi</h3><p style="margin-top:6px">'
+    +GRUPPI.map(g=>{const x=turniOf(TODAY,g);
+      return '<span class="gnum">'+g+'</span> <b>'+(x?esc(x.id):'—')+'</b>'+(x?' · '+x.t.replace('.',':'):'')}).join('<br>')
+    +'</p></div>';
+  if(med) h+='<button class="posterlink" data-goto="medita">'+posterHTML(med,d,true)+'</button>';
+  if(isStaff()){const gs=piano(TODAY),an=anomalie(TODAY);
+    h+='<button class="posterlink" data-goto="trasporti"><div class="card"><h3>Piano trasporti di oggi</h3>'
+     +'<p style="margin-top:5px"><b>'+gs.length+'</b> gruppi · <b>'+gs.reduce((n,g)=>n+g.people.length,0)+'</b> persone'
+     +(an.length?' · <b style="color:var(--yellow)">'+an.length+' da sistemare</b>':' · tutto assegnato')+'</p></div></button>';}
+  if(isStaff()) h+='<div class="staff"><p class="rule grey left" style="margin-bottom:2px">Note di servizio</p><ul>'
+    +'<li>Chiara M. rientra a casa dopo cena: avvisare la famiglia.</li>'
+    +'<li>Mancano due sacchi per la raccolta in cucina.</li>'
+    +'<li>Alle 17.00 verifica microfoni per la serata.</li></ul></div>';
+  return h;
+}
+function viewProgramma(){
+  const d=DAYS[state.day],t=nowMin();
+  let h='<div class="screen-h"><h2>Programma</h2><span class="sub">3 → 19 luglio</span></div>';
+  h+='<div class="daystrip">'+DAYS.map(x=>'<button class="chip'+(x.i===TODAY?' today':'')+'" data-day="'+x.i+'" aria-pressed="'+(x.i===state.day)+'">'
+    +'<span class="dw">'+x.dow+'</span><span class="dd">'+x.dd+'</span></button>').join('')+'</div>';
+  h+='<div><h3 style="font-size:22px">'+esc(d.label)+'</h3><p class="rule grey left" style="margin-top:4px">'+dayTitle(d)+' · '+d.week+'</p></div>';
+  h+='<div>'+giornataDi(state.day,state.who).map(x=>
+    rowHTML(x,(d.i===TODAY&&mins(x.t)+30<=t)?' past':'')).join('')+'</div>';
+  h+='<p class="local"><span>Programma nel calendario</span><button class="btn small ghost" data-demo="ics">Aggiungi</button></p>';
+  return h;
+}
+function viewTurni(){ return isStaff()?viewTurniStaff():viewTurniMiei() }
+function viewTurniMiei(){
+  const g=gruppoDi(state.who), giorni=DAYS.filter(d=>TURNI[d.i]);
+  const oggi=turniOf(TODAY,g);
+  const prossimo=giorni.find(d=>d.i>TODAY);
+  let h='<div class="screen-h"><h2>Turni</h2><span class="sub">gruppo '+(g||'—')+'</span></div>';
+  h+='<div class="now"><span class="lbl">'+(oggi?'Oggi tocca a te':'Oggi niente')+'</span>'
+    +'<span class="what">'+(oggi?esc(oggi.id):'Nessun turno')+'</span>'
+    +(oggi?'<span class="meta"><b>'+oggi.t.replace('.',':')+'</b> · con '+esc(membriDi(g).filter(n=>n!==state.who).join(', ')||'nessun altro')+'</span>':'')
+    +'</div>';
+  h+='<div class="card"><div style="display:flex;align-items:center;gap:10px"><span class="gnum big">'+(g||'?')+'</span>'
+    +'<div><h3>Il mio gruppo</h3><p style="margin-top:2px">'+esc(membriDi(g).join(', ')||'—')+'</p></div></div>'
+    +'</div>';
+  h+='<div><p class="rule grey" style="margin-bottom:2px">I turni del gruppo '+(g||'')+'</p>'
+    +giorni.map(d=>{const x=turniOf(d.i,g);
+      return '<div class="row'+(d.i<TODAY?' past':'')+'"><span class="t">'+d.dow+' '+d.dd+'</span>'
+        +'<span><span class="n">'+(x?esc(x.id):'—')+'</span><br><span class="w">'+(x?x.t.replace('.',':'):'')
+        +(d.i===TODAY?' · oggi':'')+'</span></span></div>'}).join('')+'</div>';
+  h+='<p class="local"><span>I miei turni nel calendario</span><button class="btn small ghost" data-demo="ics">Aggiungi</button></p>';
+  return h;
+}
+function viewTurniStaff(){
+  const giorni=DAYS.filter(d=>TURNI[d.i]);
+  let h='<div class="screen-h"><h2>Turni</h2><span class="sub">quattro gruppi</span></div>';
+  h+='<div class="card"><h3>Oggi · '+dayTitle(DAYS[TODAY])+'</h3>'
+    +GRUPPI.map(g=>{const x=turniOf(TODAY,g);
+      return '<p style="margin-top:6px"><span class="gnum">'+g+'</span> <b>'+(x?esc(x.id):'—')+'</b>'
+        +(x?' · '+x.t.replace('.',':'):'')+'<br><span class="w" style="color:var(--grey-2)">'+esc(membriDi(g).join(', '))+'</span></p>'}).join('')
+    +'</div>';
+  h+='<div style="overflow-x:auto"><table><thead><tr><th>Giorno</th>'
+    +GRUPPI.map(g=>'<th>gr. '+g+'</th>').join('')+'</tr></thead><tbody>'
+    +giorni.map(d=>'<tr'+(d.i===TODAY?' class="mine"':'')+'><td class="k">'+d.dow+' '+d.dd+'</td>'
+      +GRUPPI.map(g=>{const x=turniOf(d.i,g);
+        return '<td>'+(x?esc(x.id):'—')+(x?'<span class="s">'+x.t.replace('.',':')+'</span>':'')+'</td>'}).join('')+'</tr>').join('')
+    +'</tbody></table></div>';
+  h+='<p class="local"><span>la tabella arriva dal foglio</span><button class="btn small ghost" data-demo="ics">Calendario</button></p>';
+  return h;
+}
+function viewTrasporti(){ return isStaff()?viewPiano():viewMieiMovimenti() }
+function movLine(m){
+  return '<div class="row"><span class="t">'+m.t.replace('.',':')+'</span><span><span class="n">'
+    +(m.dir==='esco'?'Mi accompagnano':'Mi riprendono')+'</span><br><span class="w">'+esc(m.luogo)
+    +(m.motivo?' · '+esc(m.motivo):'')+(m.ecc?' · cambiato':'')+'</span></span></div>';
+}
+function waLink(){
+  const d=DAYS[Math.min(TODAY+1,DAYS.length-1)];
+  const txt='Ciao, sono '+state.who+' (Scuola di unità). Cambio trasporti per '+d.dowFull+' '+d.dd+' '+d.month+':\n'
+    +'· da accompagnare alle ___ a ___\n· da riprendere alle ___ a ___\nGrazie!';
+  return 'https://wa.me/'+RESP.tel+'?text='+encodeURIComponent(txt);
+}
+function viewMieiMovimenti(){
+  const pat=pattern(state.who), oggi=movimentiOf(TODAY,state.who);
+  const prossimo=oggi.find(m=>mins(m.t)>nowMin());
+  const vuota=[1,2,3,4,5].every(dw=>!(pat[dw]||[]).length);
+  let h='<div class="screen-h"><h2>Trasporti</h2><span class="sub">la mia settimana</span></div>';
+  if(prossimo) h+='<div class="now"><span class="lbl">Prossimo</span><span class="what">'+DIR[prossimo.dir].me
+    +'</span><span class="meta"><b>'+prossimo.t.replace('.',':')+'</b> · '+esc(prossimo.luogo)+'</span></div>';
+  if(vuota) h+='<div class="alert"><span class="k">Da compilare</span><p>Non hai ancora messo i tuoi orari. Compila una volta la settimana, poi non ci pensi più.</p></div>';
+  h+='<div><p class="rule grey" style="margin-bottom:2px">La mia settimana tipo</p>';
+  for(let dw=1;dw<=5;dw++){
+    const arr=pat[dw]||[], aperto=state.edit&&state.edit.dow===dw;
+    h+='<div class="row"><span class="t" style="text-transform:uppercase;font-size:13px;letter-spacing:.12em;min-width:46px">'+ITDF[dw].slice(0,3)+'</span><span style="flex:1">'
+      +(arr.length?arr.map(m=>'<span class="n">'+m.t.replace('.',':')+'</span> <span class="w">'+DIR[m.dir].ed
+          +' · '+esc(m.luogo.split(' · ')[0])+(m.motivo&&m.motivo!=='scuola'?' ('+esc(m.motivo)+')':'')+'</span>').join('<br>')
+        :'<span class="w">niente</span>')
+      +'</span><button class="btn small ghost" data-editdow="'+dw+'">'+(aperto?'chiudi':'modifica')+'</button></div>';
+    if(aperto){
+      const rows=state.edit.rows;
+      h+='<div class="card" style="margin:2px 0 10px">'
+        +(rows.length?rows.map((m,i)=>'<div class="movrow">'
+          +'<select id="m'+i+'_d"><option value="esco"'+(m.dir==='esco'?' selected':'')+'>accompagnare</option>'
+          +'<option value="rientro"'+(m.dir==='rientro'?' selected':'')+'>riprendere</option></select>'
+          +'<select id="m'+i+'_t">'+optList(TIMES,m.t)+'</select>'
+          +'<select id="m'+i+'_l">'+optList(LUOGHI,m.luogo)+'</select>'
+          +'<select id="m'+i+'_c">'+optList(MOTIVI,m.motivo)+'</select>'
+          +'<button class="xbtn" data-delrow="'+i+'" aria-label="togli">×</button></div>').join('')
+          :'<p class="empty">Nessuno spostamento in questo giorno.</p>')
+        +'<div class="btnrow" style="justify-content:flex-start;margin-top:10px">'
+        +'<button class="btn ghost small" data-addrow="1">+ spostamento</button>'
+        +'<button class="btn" data-savedow="'+dw+'">Salva</button>'
+        +'<button class="btn ghost" data-editdow="'+dw+'">Annulla</button></div></div>';
+    }
+  }
+  h+='</div>';
+  h+='<div class="card"><h3>Cambia qualcosa?</h3>'
+    +'<p style="margin-top:5px">I cambiamenti non si dichiarano qui: scrivi a <b>'+esc(RESP.nome)+'</b>, così resta una persona sola a tenere il piano.</p>'
+    +'<div class="btnrow" style="justify-content:flex-start;margin-top:10px">'
+    +'<a class="btn" href="'+waLink()+'" target="_blank" rel="noopener">Scrivi su WhatsApp</a></div>'
+    +'<p class="local" style="margin-top:8px"><span>+39 389 178 7634</span></p></div>';
+  const mie=allEcc().filter(e=>e.who===state.who&&e.day>=TODAY).sort((c,d)=>c.day-d.day);
+  h+='<div><p class="rule grey" style="margin-bottom:2px">Cambiamenti registrati</p>'
+    +(mie.length?mie.map(e=>{const d=DAYS[e.day];
+      return '<div class="row"><span class="t">'+d.dow+' '+d.dd+'</span><span><span class="n">'
+        +(e.kind==='niente'?'Nessuno spostamento':e.kind==='no-rientro'?'Nessuno mi riprende':DIR[e.kind].me+' alle '+e.t.replace('.',':'))
+        +'</span>'+(e.luogo?'<br><span class="w">'+esc(e.luogo)+'</span>':'')
+        +(e.nota?'<br><span class="w">'+esc(e.nota)+'</span>':'')
+        +'<br><span class="w">inserito dal responsabile</span></span></div>'}).join('')
+     :'<p class="empty">Nessun cambiamento per i prossimi giorni.</p>')+'</div>';
+  return h;
+}
+function viewPiano(){
+  const day=state.pday===undefined?TODAY:state.pday, d=DAYS[day], gs=piano(day), an=anomalie(day);
+  let h='<div class="screen-h"><h2>Piano mezzi</h2><span class="sub">'+dayTitle(d)+'</span></div>';
+  h+='<div class="daystrip">'+DAYS.filter(x=>x.i>=TODAY&&x.i<=TODAY+6).map(x=>
+    '<button class="chip'+(x.i===TODAY?' today':'')+'" data-pday="'+x.i+'" aria-pressed="'+(x.i===day)+'">'
+    +'<span class="dw">'+x.dow+'</span><span class="dd">'+x.dd+'</span></button>').join('')+'</div>';
+  if(an.length) h+='<div class="alert"><span class="k">Da sistemare</span>'
+    +an.map(a=>'<p>'+esc(a)+'</p>').join('')+'</div>';
+  h+=gs.length?gs.map(g=>{
+    const v=MEZZI.find(v=>v.id===g.mezzo);
+    return '<div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">'
+      +'<h3>'+g.t0.replace('.',':')+(g.t1!==g.t0?'–'+g.t1.replace('.',':'):'')+' · '+DIR[g.dir].staff.toLowerCase()+'</h3>'
+      +'<span class="pill'+(g.mezzo?' on':'')+'">'+g.people.length+(g.people.length===1?' persona':' persone')+'</span></div>'
+      +'<p style="margin-top:3px"><b>'+esc(g.luogo)+'</b></p>'
+      +'<p style="margin-top:4px">'+g.people.map(m=>esc(m.who)+' <span style="color:var(--grey-2)">'+m.t.replace('.',':')+(m.nota?' · '+esc(m.nota):'')+'</span>').join('<br>')+'</p>'
+      +'<div class="editgrid" style="margin-top:9px"><label for="m_'+g.key+'">mezzo</label>'
+      +'<select id="m_'+g.key+'" data-mezzo="'+g.key+'" style="grid-column:span 2"><option value="">— da assegnare —</option>'
+      +MEZZI.map(v2=>'<option value="'+v2.id+'"'+(v2.id===g.mezzo?' selected':'')+'>'+v2.id+' · '+v2.cond+' · '+v2.posti+' posti</option>').join('')
+      +'</select></div>'
+      +(v?'<p class="w" style="margin-top:5px;color:var(--grey-2)">guida '+esc(v.cond)+'</p>':'')
+      +'</div>'}).join('')
+   :'<p class="empty">Nessun movimento dichiarato per questo giorno.</p>';
+  const nondich=PEOPLE.filter(p=>p.role==='ragazzo'&&!movimentiOf(day,p.n).length&&!allEcc().some(e=>e.day===day&&e.who===p.n));
+  if(nondich.length) h+='<div class="staff"><p class="rule grey left" style="margin-bottom:2px">Nessun movimento</p>'
+    +'<p style="color:var(--grey)">'+nondich.map(p=>esc(p.n)).join(', ')+'</p></div>';
+  h+='<p class="local"><span>Piano del giorno nel calendario</span><button class="btn small ghost" data-demo="ics">Aggiungi</button></p>';
+  return h;
+}
+function viewMedita(){
+  const med=MEDS[TODAY],d=DAYS[TODAY];
+  let h='<div class="screen-h"><h2>Meditazione</h2><span class="sub">15.45 → 16.00</span></div>';
+  if(!med){h+='<p class="empty">Oggi non c’è meditazione: c’è il patto.</p>';return h}
+  h+=posterHTML(med,d,false);
+  h+='<div class="card"><h3>Come si fa</h3><ol class="steps"><li>Si parte insieme alle 15.45, ciascuno dove vuole.</li>'
+    +'<li>Quindici minuti. Nessuno guida.</li><li>Se vuoi, scrivi qui sotto: resta sul tuo telefono.</li></ol></div>';
+  const pct=state.timer.left/900;
+  h+='<div class="timer"><div class="ring"><svg width="154" height="154" viewBox="0 0 154 154">'
+    +'<circle class="bg" cx="77" cy="77" r="70"/><circle class="fg" cx="77" cy="77" r="70" stroke-dasharray="440" stroke-dashoffset="'+(440*(1-pct)).toFixed(1)+'"/></svg>'
+    +'<span class="val">'+String(Math.floor(state.timer.left/60)).padStart(2,'0')+':'+String(state.timer.left%60).padStart(2,'0')+'</span></div>'
+    +'<div class="btnrow"><button class="btn" data-timer="'+(state.timer.running?'pause':'start')+'">'
+    +(state.timer.running?'Pausa':(state.timer.left<900?'Riprendi':'Comincia'))+'</button>'
+    +'<button class="btn ghost" data-timer="reset">Azzera</button></div></div>';
+  h+='<div><p class="rule grey left" style="margin-bottom:6px">Il mio quaderno</p>'
+    +'<textarea id="nota" placeholder="Scrivi qui, se ti viene.">'+esc(store.get('nota.'+TODAY,''))+'</textarea>'
+    +'<p class="local"><span id="notastate">resta sul tuo telefono</span><button class="btn small ghost" data-demo="copy">Copia</button></p></div>';
+  return h;
+}
+function giornataDi(day,person){
+  const staff=PEOPLE.find(p=>p.n===person)&&PEOPLE.find(p=>p.n===person).role==='animatore';
+  const out=DAYS[day].items
+    .filter(x=>staff||x.n!=='Turni di servizio')
+    .map(x=>({...x}));
+  if(!staff){
+    const g=gruppoDi(person), t=turniOf(day,g);
+    if(t) out.push({t:t.t,n:t.id,w:'turno del gruppo '+g,mio:'turno'});
+    movimentiOf(day,person).forEach(m=>out.push({t:m.t,n:DIR[m.dir].me,w:m.luogo,mio:'mezzo'}));
+  }
+  return out.sort((a,b)=>mins(a.t)-mins(b.t));
+}
+function rowHTML(x,cls){
+  return '<div class="row'+(cls||'')+(x.mio?' mio':'')+'"><span class="t">'+x.t.replace('.',':')+'</span>'
+    +'<span><span class="n">'+esc(x.n)+'</span>'+(x.mio?'<span class="tagi">'+x.mio+'</span>':'')
+    +(x.w?'<br><span class="w">'+esc(x.w)+'</span>':'')+'</span></div>';
+}
+const VIEWS={oggi:viewOggi,programma:viewProgramma,turni:viewTurni,trasporti:viewTrasporti,medita:viewMedita};
+
+/* ===================== render + eventi ===================== */
+function renderTabs(){document.getElementById('tabs').innerHTML=TABS.map(t=>
+  '<button role="tab" data-tab="'+t.id+'" aria-selected="'+(state.tab===t.id)+'"><svg viewBox="0 0 24 24">'+t.icon+'</svg>'+t.label+'</button>').join('');}
+function readRows(){
+  if(!state.edit)return;
+  state.edit.rows=state.edit.rows.map((m,i)=>{
+    const d=document.getElementById('m'+i+'_d');if(!d)return m;
+    return {dir:d.value,t:document.getElementById('m'+i+'_t').value,
+            luogo:document.getElementById('m'+i+'_l').value,motivo:document.getElementById('m'+i+'_c').value}});
+}
+function render(){document.getElementById('view').innerHTML=VIEWS[state.tab]();renderTabs();}
+document.getElementById('tabs').addEventListener('click',e=>{
+  const b=e.target.closest('[data-tab]');if(!b)return;
+  state.tab=b.dataset.tab;document.getElementById('view').scrollTop=0;render();});
+document.getElementById('view').addEventListener('click',e=>{
+  const go=e.target.closest('[data-goto]');
+  if(go){state.tab=go.dataset.goto;document.getElementById('view').scrollTop=0;render();return}
+  const day=e.target.closest('[data-day]');
+  if(day){state.day=+day.dataset.day;render();return}
+  const tm=e.target.closest('[data-timer]');
+  if(tm){const a=tm.dataset.timer;
+    if(a==='start'){state.timer.running=true;clearInterval(state.timer.id);
+      state.timer.id=setInterval(()=>{state.timer.left--;
+        if(state.timer.left<=0){state.timer.left=0;state.timer.running=false;clearInterval(state.timer.id)}
+        if(state.tab==='medita')render();},1000);}
+    else if(a==='pause'){state.timer.running=false;clearInterval(state.timer.id)}
+    else{state.timer.running=false;clearInterval(state.timer.id);state.timer.left=900}
+    render();return}
+  const sg=e.target.closest('[data-setg]');
+  if(sg){store.set('gruppo.'+state.who,sg.dataset.setg);render();return}
+  const ed=e.target.closest('[data-editdow]');
+  if(ed){const dw=+ed.dataset.editdow;
+    state.edit=(state.edit&&state.edit.dow===dw)?null:{dow:dw,rows:(pattern(state.who)[dw]||[]).map(m=>({...m}))};
+    render();return}
+  const ar=e.target.closest('[data-addrow]');
+  if(ar){readRows();state.edit.rows.push({dir:'esco',t:'16.00',luogo:LUOGHI[0],motivo:'allenamento'});render();return}
+  const dr=e.target.closest('[data-delrow]');
+  if(dr){readRows();state.edit.rows.splice(+dr.dataset.delrow,1);render();return}
+  const sv=e.target.closest('[data-savedow]');
+  if(sv){readRows();const dw=+sv.dataset.savedow,pat=pattern(state.who);
+    pat[dw]=state.edit.rows.slice().sort((a,c)=>mins(a.t)-mins(c.t));
+    savePattern(state.who,pat);state.edit=null;render();return}
+  const pd=e.target.closest('[data-pday]');
+  if(pd){state.pday=+pd.dataset.pday;render();return}
+  const demo=e.target.closest('[data-demo]');
+  if(demo){
+    if(demo.dataset.demo==='copy'){const ta=document.getElementById('nota');
+      if(ta&&navigator.clipboard){navigator.clipboard.writeText(ta.value)
+        .then(()=>{document.getElementById('notastate').textContent='copiato negli appunti'}).catch(()=>{});}}
+    else{demo.textContent='non attivo nel prototipo';demo.disabled=true;}}
+});
+document.getElementById('view').addEventListener('change',e=>{
+  const m=e.target.closest('[data-mezzo]');
+  if(m){store.set('mezzo.'+m.dataset.mezzo,m.value);render();}
+});
+document.getElementById('view').addEventListener('input',e=>{
+  if(e.target.id==='nota'){store.set('nota.'+TODAY,e.target.value);
+    document.getElementById('notastate').textContent='salvato sul tuo telefono';}});
+
+
+/* ---------------- avvio, identità, impostazioni ---------------- */
+const RAGAZZI=PEOPLE.filter(p=>p.role==='ragazzo');
+function fmtOggi(){const d=DAYS[TODAY];return d.dowFull+' '+d.dd+' '+d.month}
+function startApp(){
+  document.getElementById('onb').hidden=!!state.who;
+  document.getElementById('app').hidden=!state.who;
+  document.getElementById('today').textContent=fmtOggi();
+  if(state.who){render();}
+}
+document.getElementById('onblist').innerHTML=RAGAZZI.map(p=>
+  '<button class="namebtn" data-who="'+p.n+'">'+p.n+'<span>gruppo '+p.g+'</span></button>').join('');
+document.getElementById('onblist').addEventListener('click',e=>{
+  const b=e.target.closest('[data-who]');if(!b)return;
+  state.who=b.dataset.who;store.set('who',state.who);
+  document.getElementById('onb').hidden=true;document.getElementById('app').hidden=false;
+  render();openSheet(true);
+});
+function openSheet(first){
+  const g=gruppoDi(state.who);
+  document.getElementById('sheetbody').innerHTML=
+    '<p class="rule left" style="margin-bottom:10px">'+(first?'Ci siamo':'Io')+'</p>'
+    +'<h2 style="font-size:24px">'+esc(state.who)+'</h2>'
+    +'<p style="color:var(--grey);margin-top:4px">Gruppo pulizie '+g+' · con '+esc(membriDi(g).filter(n=>n!==state.who).join(', ')||'nessun altro')+'</p>'
+    +'<div class="card" style="margin-top:14px"><h3>Tienila a portata di mano</h3>'
+    +'<p style="margin-top:5px">'+(/iPhone|iPad|iPod/.test(navigator.userAgent)
+       ? 'Tocca <b>Condividi</b> in basso in Safari, poi <b>Aggiungi a Home</b>: si apre come un\'app e funziona anche senza rete.'
+       : 'Apri il menu del browser e scegli <b>Installa app</b> o <b>Aggiungi a schermata Home</b>: funziona anche senza rete.')+'</p>'
+    +'<div class="btnrow" style="justify-content:flex-start;margin-top:10px" id="installrow"></div></div>'
+    +'<div class="card" style="margin-top:10px"><h3>Qualcosa non va?</h3>'
+    +'<p style="margin-top:5px">Scrivilo: è una prova, serve proprio per questo.</p>'
+    +'<div class="btnrow" style="justify-content:flex-start;margin-top:10px">'
+    +'<a class="btn" target="_blank" rel="noopener" href="https://wa.me/'+RESP.tel+'?text='
+    +encodeURIComponent('Prova app be ONE — sono '+state.who+'. Ho trovato questo: ')+'">Scrivi su WhatsApp</a></div></div>'
+    +'<div class="btnrow" style="justify-content:space-between;margin-top:14px">'
+    +'<button class="btn ghost small" data-reset="1">non sono io</button>'
+    +'<button class="btn" data-close="1">'+(first?'Cominciamo':'Chiudi')+'</button></div>'
+    +'<p class="local" style="margin-top:12px"><span>versione di prova · dati inventati</span></p>';
+  if(deferredPrompt){const r=document.getElementById('installrow');
+    r.innerHTML='<button class="btn" data-install="1">Installa</button>';}
+  document.getElementById('sheet').hidden=false;
+}
+document.getElementById('sheet').addEventListener('click',e=>{
+  if(e.target.id==='sheet'||e.target.closest('[data-close]')){document.getElementById('sheet').hidden=true;return}
+  if(e.target.closest('[data-reset]')){
+    state.who=null;try{localStorage.removeItem('beone.who')}catch(err){}
+    document.getElementById('sheet').hidden=true;document.getElementById('app').hidden=true;
+    document.getElementById('onb').hidden=false;return}
+  if(e.target.closest('[data-install]')&&deferredPrompt){deferredPrompt.prompt();deferredPrompt=null;
+    document.getElementById('installrow').innerHTML='';}
+});
+document.getElementById('meBtn').addEventListener('click',()=>openSheet(false));
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e});
+setInterval(()=>{if(state.who&&(state.tab==='oggi'||state.tab==='programma'))render()},60000);
+if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+startApp();
+
+</script>
+</body>
+</html>
